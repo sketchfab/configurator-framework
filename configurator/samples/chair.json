@@ -1,0 +1,38 @@
+{
+    "model": "4d9d1eaa3efe44099a223192d418c17d",
+    "params": {
+        "camera": 0,
+        "preload": 1,
+        "ui_controls": 0,
+        "ui_infos": 0,
+        "ui_hint": 2,
+        "ui_stop": 0,
+        "internal": 1,
+        "watermark": 0,
+        "double_click": 0,
+        "autospin": -0.1
+    },
+    "config": [{
+        "name": "Select color",
+        "type": "color",
+        "material": ["seat"],
+        "options": [{
+                "color": "#6FC0E7",
+                "name": "Light Blue"
+            },
+            {
+                "color": "#2B4462",
+                "name": "Dark Blue"
+            },
+            {
+                "color": "#80B744",
+                "name": "Green"
+            },
+            {
+                "color": "#cc1f16",
+                "name": "Red"
+            }
+        ],
+        "default": "#2B4462"
+    }]
+}

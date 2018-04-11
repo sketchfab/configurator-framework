@@ -1,0 +1,43 @@
+{
+    "model": "58425893f23d4ee691014e43fa12980c",
+    "params": {
+        "camera": 0,
+        "preload": 1,
+        "scrollwheel": 0
+    },
+    "config": [
+        {
+            "name": "Arms",
+            "type": "visible",
+            "selector": "[name=\"g_arm\"]",
+            "default": false
+        },
+
+        {
+            "name": "Plastic color",
+            "type": "color",
+            "material": "white_plastic",
+            "default": "#1CAAD9"
+        },
+
+        {
+            "name": "Antenna side",
+            "type": "select",
+            "options": [
+                {
+                    "selector": "",
+                    "name": "No antenna"
+                },
+                {
+                    "selector": "[name=\"g_head_LEFT\"] [name=\"g_aerial\"]",
+                    "name": "Left"
+                },
+                {
+                    "selector": "[name=\"g_head_RIGHT\"] [name=\"g_aerial\"]",
+                    "name": "Right"
+                }
+            ],
+            "default": 0
+        }
+    ]
+}

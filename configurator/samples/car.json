@@ -1,0 +1,31 @@
+{
+    "model": "36e9d3598c554bb69f3d9cd00e161818",
+    "config": [
+        {
+            "name": "Paint color",
+            "type": "color",
+            "material": ["body", "body_0"],
+            "default": "#790300"
+        },
+        {
+            "name": "Seat color",
+            "type": "color",
+            "material": ["leather_1", "leather_2"],
+            "options": [
+                {
+                    "color": "#333333",
+                    "name": "Black"
+                },
+                {
+                    "color": "#FFFFFF",
+                    "name": "White"
+                },
+                {
+                    "color": "#803A00",
+                    "name": "Brown"
+                }
+            ],
+            "default": "#803A00"
+        }
+    ]
+}
