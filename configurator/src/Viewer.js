@@ -16,13 +16,14 @@ Viewer.prototype = {
     start: function start() {
         var client = new Sketchfab(this.iframe);
 
-        var mandatoryParams = {
-            graph_optimizer: 0,
-            success: this._onSuccess.bind(this),
-            error: this._onError.bind(this)
+        var defaultParams = {
+            graph_optimizer: 0
         };
         var userParams = this.options.hasOwnProperty('params') ? this.options.params : {};
-        var params = Object.assign({}, userParams, mandatoryParams);
+        var params = Object.assign({}, defaultParams, userParams, {
+            success: this._onSuccess.bind(this),
+            error: this._onError.bind(this)
+        });
         client.init(this.uid, params);
     },
 
