@@ -1,9 +1,11 @@
 import 'babel-polyfill';
+import Ajv from 'ajv';
 import fetch from 'unfetch';
 import parseQueryString from './lib/parseQueryString';
 import Viewer from './Viewer';
 import Options from './Options';
 import OptionsView from './OptionsView';
+const schema = require('./schema.json');
 
 class Configurator {
     constructor(iframeEl, optionsEl, config = null) {
@@ -35,6 +37,10 @@ class Configurator {
 
         promiseConfig
             .then(config => {
+                let validation = this._validate(config);
+                if (validation.valid === false) {
+                    console.warn(validation.errors);
+                }
                 this.config = config;
                 this.initialize();
             })
@@ -58,6 +64,22 @@ class Configurator {
                 params: config.params ? config.params : {}
             }
         );
+    }
+
+    _validate(config) {
+        const ajv = new Ajv();
+        const validate = ajv.compile(schema);
+        const valid = validate(config);
+        if (valid) {
+            return {
+                valid: true
+            };
+        } else {
+            return {
+                valid: false,
+                errors: validate.errors
+            };
+        }
     }
 
     dispose() {

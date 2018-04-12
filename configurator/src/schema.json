@@ -1,0 +1,175 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Configurator",
+    "description": "A configurator configuration",
+    "type": "object",
+    "properties": {
+        "model": {
+            "description": "URLID of a Sketchfab model",
+            "type": "string"
+        },
+        "params": {
+            "description": "Embed parameters",
+            "type": "object"
+        },
+        "config": {
+            "description": "Description of what can be configured",
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    { "$ref": "#/definitions/visibleOption" },
+                    { "$ref": "#/definitions/colorOption" },
+                    { "$ref": "#/definitions/selectOption" }
+                ]
+            }
+        },
+        "extra": {
+            "description": "Extra data for extending the format",
+            "type": "object"
+        }
+    },
+    "required": ["model", "config"],
+    "definitions": {
+
+        "namedColor": {
+            "$id": "#namedColor",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable name",
+                    "type": "string"
+                },
+                "color": {
+                    "description": "Hexadecimal RGB color",
+                    "type": "string"
+                }
+            },
+            "required": ["name", "color"]
+        },
+
+        "predefinedTexture": {
+            "$id": "#predefinedTexture",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable name",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "Image URL",
+                    "type": "string"
+                }
+            },
+            "required": ["name", "channels", "url"]
+        },
+
+        "modelPart": {
+            "$id": "#modelPart",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable name",
+                    "type": "string"
+                },
+                "selector": {
+                    "description": "CSS selector",
+                    "$ref": "#/definitions/selector"
+                }
+            },
+            "required": ["name", "selector"]
+        },
+
+        "selector": {
+            "$id": "#selector",
+            "type": ["string", "array"],
+            "items": {
+                "type": "string"
+            }
+        },
+
+        "visibleOption": {
+            "$id": "#visibleOption",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable option name",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of option",
+                    "type": "string",
+                    "enum": ["visible"]
+                },
+                "selector": {
+                    "description": "CSS selector",
+                    "$ref": "#/definitions/selector"
+                },
+                "default": {
+                    "description": "Default value",
+                    "type": "boolean"
+                }
+            },
+            "required": ["name", "type", "selector"]
+        },
+
+        "colorOption": {
+            "$id": "#colorOption",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable option name",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of option",
+                    "type": "string",
+                    "enum": ["color"]
+                },
+                "material": {
+                    "description": "Material name",
+                    "type": ["string", "array"]
+                },
+                "options": {
+                    "description": "List of predefined colors",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/namedColor" }
+                },
+                "default": {
+                    "description": "Default color (hexadecimal RGB)",
+                    "type": "string"
+                }
+            },
+            "required": ["name", "type", "material"]
+        },
+
+        "selectOption": {
+            "$id": "#selectOption",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable option name",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of option",
+                    "type": "string",
+                    "enum": ["select"]
+                },
+                "options": {
+                    "description": "List of predefined model parts",
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            { "$ref": "#/definitions/modelPart" }
+                        ]
+                    }
+                },
+                "default": {
+                    "description": "Default value index",
+                    "type": "integer"
+                }
+            },
+            "required": ["name", "type"]
+        }
+    }
+}
