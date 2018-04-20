@@ -83,6 +83,35 @@ Only the selected object will be visible.
 }
 ```
 
+### Texture
+
+The `texture` option allows the user to change the texture of selected channels of a material.
+Images must be CORS-enabled.
+
+```javascript
+{
+    "name": "Face",
+    "type": "texture",
+    "material": "face",
+    "channels": ["AlbedoPBR", "EmitColor"],
+    "options": [
+        {
+            "name": "Default",
+            "url": "https://example.com/face-default.png"
+        },
+        {
+            "name": "Happy",
+            "url": "https://example.com/face-happy.jpg"
+        },
+        {
+            "name": "Sleepy",
+            "url": "https://example.com/face-sleepy.jpg"
+        }
+    ],
+    "default": 0
+}
+```
+
 ## API
 
 ### SketchfabConfigurator.Configurator(iframeEl, optionsEl)

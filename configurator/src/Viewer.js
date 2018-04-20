@@ -9,6 +9,7 @@ export default function Viewer(iframe, uid, callback, options) {
     this.api = null;
     this.doc = null;
     this.materials = null;
+    this.textures = {};
     this.start();
 }
 
@@ -128,6 +129,20 @@ Viewer.prototype = {
         );
     },
 
+    _getMaterialByName: function _getMaterialByName(materialName) {
+
+        if (!this.materials) {
+            return null;
+        }
+
+        return this.materials.reduce(function(acc, cur) {
+            if (cur.name === materialName) {
+                return cur;
+            }
+            return acc;
+        }, null);
+    },
+
     _renderGraphNode: function _renderGraphNode(doc, node) {
         var newNode = doc.createElement(node.type);
         newNode.setAttribute('instance', node.instanceID);
@@ -218,31 +233,39 @@ Viewer.prototype = {
     },
 
     setTexture: function setTexture(materialName, channels, url) {
-        console.log(arguments);
-        var material = this.materials.reduce(function(acc, cur) {
-            if (cur.name === materialName) {
-                return cur;
-            }
-            return acc;
-        }, null);
-
-        this.api.addTexture(
-            url,
-            function(err, textureUid) {
-                for (var i = 0; i < channels.length; i++) {
-                    if (
-                        material.channels.hasOwnProperty(channels[i]) &&
-                        material.channels[channels[i]].texture
-                    ) {
-                        material.channels[channels[i]].texture.uid = textureUid;
-                    }
+        var material = this._getMaterialByName(materialName);
+        var texturePromise = this._addTexture(url);
+        texturePromise.then(textureUid => {
+            for (var i = 0; i < channels.length; i++) {
+                if (
+                    material.channels.hasOwnProperty(channels[i]) &&
+                    material.channels[channels[i]].texture
+                ) {
+                    material.channels[channels[i]].texture.uid = textureUid;
                 }
-                this.api.setMaterial(material, function(err, result) {
+            }
+            this.api.setMaterial(material, function(err, result) {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        });
+    },
+
+    _addTexture: function(url) {
+        return new Promise((resolve, reject) => {
+            if (this.textures.hasOwnProperty(url)) {
+                resolve(this.textures[url]);
+            } else {
+                this.api.addTexture(url, (err, textureUid) => {
                     if (err) {
-                        console.error(err);
+                        reject(err);
+                    } else {
+                        this.textures[url] = textureUid;
+                        resolve(textureUid);
                     }
                 });
-            }.bind(this)
-        );
+            }
+        });
     }
 };

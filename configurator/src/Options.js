@@ -100,30 +100,6 @@ Options.prototype = {
         }
     },
 
-    // Texture option (WIP)
-    // {
-    //     "name": "Face",
-    //     "type": "texture",
-    //     "material": "face",
-    //     "options": [
-    //         {
-    //             "name": "Default",
-    //             "channels": ["AlbedoPBR", "EmitColor"],
-    //             "url": "https://mauricesvay.s3.amazonaws.com/sketchfab/tmp/face-default.png"
-    //         },
-    //         {
-    //             "name": "Happy",
-    //             "channels": ["AlbedoPBR", "EmitColor"],
-    //             "url": "https://mauricesvay.s3.amazonaws.com/sketchfab/tmp/face-happy.jpg"
-    //         },
-    //         {
-    //             "name": "Sleepy",
-    //             "channels": ["AlbedoPBR", "EmitColor"],
-    //             "url": "https://mauricesvay.s3.amazonaws.com/sketchfab/tmp/face-sleepy.jpg"
-    //         }
-    //     ],
-    //     "default": 0
-    // }
     applyOptionTexture: function(optionIndex, selectedIndex) {
         var option = this.options[optionIndex];
 
@@ -135,7 +111,7 @@ Options.prototype = {
             if (i === selectedIndex) {
                 this.viewer.setTexture(
                     option.material,
-                    option.options[i].channels,
+                    option.channels,
                     option.options[i].url
                 );
             }

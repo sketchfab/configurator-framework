@@ -55,7 +55,7 @@ OptionsView.prototype = {
             var colorElements = option.options.map(function(opt, i) {
                 var checked = opt.color === defaultValue ? 'checked="checked"' : '';
                 return `
-                    <label class="color">
+                    <label class="color" data-value="${opt.color}">
                         <input type="radio" name="${id}" value="${opt.color}" data-option="${index}" ${checked}>
                         <span class="color__swatch" style="background-color: ${
                             opt.color
@@ -90,7 +90,6 @@ OptionsView.prototype = {
             checkboxEl.setAttribute('checked', 'checked');
         }
 
-        // el.addEventListener('change', this.handleOptionChange.bind(this), false);
         this.el.appendChild(el);
     },
 
@@ -115,7 +114,6 @@ OptionsView.prototype = {
         });
         selectEl.value = this.model.getOptionValue(index);
 
-        // el.addEventListener('change', this.handleOptionChange.bind(this), false);
         this.el.appendChild(el);
     },
 
@@ -135,16 +133,15 @@ OptionsView.prototype = {
         var images = option.options.map(function(option, i) {
             var checked = i === defaultValue ? 'checked="checked"' : '';
             return `
-                <label>
+                <label class="texture" data-url="${option.url}">
                     <input type="radio" name="${id}" value="${i}" data-option="${index}" ${checked}>
-                    <img src="${option.url}" width="100" height="100" alt="${option.name}">
-                    <span>${option.name}</span>
+                    <span class="texture__preview"><img src="${option.url}" width="100" height="100" alt="${option.name}"></span>
+                    <span class="texture__name">${option.name}</span>
                 </label>
             `;
         });
         container.innerHTML = images.join('');
 
-        // el.addEventListener('change', this.handleOptionChange.bind(this), false);
         this.el.appendChild(el);
     }
 };
