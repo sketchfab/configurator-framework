@@ -130,7 +130,6 @@ Viewer.prototype = {
     },
 
     _getMaterialByName: function _getMaterialByName(materialName) {
-
         if (!this.materials) {
             return null;
         }
@@ -202,21 +201,13 @@ Viewer.prototype = {
             material = [material];
         }
 
-        material.forEach(
-            function(mat) {
-                this._setMaterialColor(mat, hexColor);
-            }.bind(this)
-        );
+        material.forEach(mat => {
+            this._setMaterialColor(mat, hexColor);
+        });
     },
 
-    _setMaterialColor: function(material, hexColor) {
-        var material = this.materials.reduce(function(acc, cur) {
-            if (cur.name === material) {
-                return cur;
-            }
-            return acc;
-        }, null);
-
+    _setMaterialColor: function(materialName, hexColor) {
+        var material = this._getMaterialByName(materialName);
         var linearColor = srgbToLinear(hexToRgb(hexColor));
         material.channels.AlbedoPBR.color = linearColor;
         material.channels.DiffusePBR.color = linearColor;
@@ -232,10 +223,24 @@ Viewer.prototype = {
         });
     },
 
-    setTexture: function setTexture(materialName, channels, url) {
+    setTexture: function setTexture(material, channels, url) {
+        if (!Array.isArray(material)) {
+            material = [material];
+        }
+
+        material.forEach(mat => {
+            this._setMaterialTexture(mat, channels, url);
+        });
+    },
+
+    _setMaterialTexture: function _setMaterialTexture(materialName, channels, url) {
         var material = this._getMaterialByName(materialName);
         var texturePromise = this._addTexture(url);
         texturePromise.then(textureUid => {
+            // Accept array of channel names, or a single channel name
+            if (!Array.isArray(channels)) {
+                channels = [channels];
+            }
             for (var i = 0; i < channels.length; i++) {
                 if (
                     material.channels.hasOwnProperty(channels[i]) &&

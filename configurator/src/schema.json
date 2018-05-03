@@ -188,11 +188,11 @@
                 },
                 "material": {
                     "description": "Material name",
-                    "type": "string"
+                    "type": ["string", "array"]
                 },
                 "channels": {
                     "description": "Material channels",
-                    "type": "array"
+                    "type": ["string", "array"]
                 },
                 "options": {
                     "description": "List of predefined textures",
