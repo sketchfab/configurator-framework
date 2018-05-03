@@ -19,7 +19,8 @@
                 "anyOf": [
                     { "$ref": "#/definitions/visibleOption" },
                     { "$ref": "#/definitions/colorOption" },
-                    { "$ref": "#/definitions/selectOption" }
+                    { "$ref": "#/definitions/selectOption" },
+                    { "$ref": "#/definitions/textureOption" }
                 ]
             }
         },
@@ -60,7 +61,7 @@
                     "type": "string"
                 }
             },
-            "required": ["name", "channels", "url"]
+            "required": ["name", "url"]
         },
 
         "modelPart": {
@@ -161,6 +162,44 @@
                     "items": {
                         "anyOf": [
                             { "$ref": "#/definitions/modelPart" }
+                        ]
+                    }
+                },
+                "default": {
+                    "description": "Default value index",
+                    "type": "integer"
+                }
+            },
+            "required": ["name", "type"]
+        },
+
+        "textureOption": {
+            "$id": "#textureOption",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human readable option name",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of option",
+                    "type": "string",
+                    "enum": ["texture"]
+                },
+                "material": {
+                    "description": "Material name",
+                    "type": "string"
+                },
+                "channels": {
+                    "description": "Material channels",
+                    "type": "array"
+                },
+                "options": {
+                    "description": "List of predefined textures",
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            { "$ref": "#/definitions/predefinedTexture" }
                         ]
                     }
                 },
