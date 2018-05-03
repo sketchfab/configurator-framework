@@ -30,6 +30,7 @@ iframe {
     box-sizing: border-box;
     flex: 0 0 300px;
     padding: 30px;
+    overflow: auto;
 }
 
 .option {
@@ -73,4 +74,35 @@ iframe {
 
 .color:hover .color__swatch {
     box-shadow: 0 0 0 2px #999;
+}
+
+.texture {
+    display: block;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.texture input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.texture__preview {
+    display: block;
+}
+
+.texture__preview  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.texture input:checked + .texture__preview > img {
+    box-shadow: 0 0 0 2px #000;
+}
+
+.texture__name {
+    display: block;
+    margin-top: 4px;
 }
