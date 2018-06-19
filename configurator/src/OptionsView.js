@@ -135,7 +135,7 @@ OptionsView.prototype = {
             return `
                 <label class="texture" data-url="${option.url}">
                     <input type="radio" name="${id}" value="${i}" data-option="${index}" ${checked}>
-                    <span class="texture__preview"><img src="${option.url}" width="100" height="100" alt="${option.name}"></span>
+                    <span class="texture__preview"><img src="${option.url}?preview" width="100" height="100" alt="${option.name}"></span>
                     <span class="texture__name">${option.name}</span>
                 </label>
             `;
