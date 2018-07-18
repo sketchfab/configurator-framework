@@ -1,11 +1,14 @@
 import 'babel-polyfill';
 import Ajv from 'ajv';
 import fetch from 'unfetch';
+import isIFrame from './lib/isIFrame';
 import parseQueryString from './lib/parseQueryString';
 import Viewer from './Viewer';
 import Options from './Options';
 import OptionsView from './OptionsView';
 const schema = require('./schema.json');
+
+const ALLOW_EMBED = true;
 
 class Configurator {
     constructor(iframeEl, optionsEl, config = null) {
@@ -14,6 +17,11 @@ class Configurator {
         this.optionView = null;
         this.viewer = null;
         this.config = config;
+
+        if (!ALLOW_EMBED && isIFrame()) {
+            this.renderFatalError('This page is for preview only and cannot be embedded.');
+            return;
+        }
 
         var promiseConfig;
 
@@ -64,6 +72,20 @@ class Configurator {
                 params: config.params ? config.params : {}
             }
         );
+    }
+
+    renderFatalError(message) {
+        const styles = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 96%;
+            padding: 2%;
+        `;
+        const out = `<div style="${styles}">${message}</div>`;
+        const div = document.createElement('DIV');
+        div.innerHTML = out;
+        document.body.appendChild(div);
     }
 
     _validate(config) {
