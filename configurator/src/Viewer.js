@@ -246,7 +246,20 @@ Viewer.prototype = {
                     material.channels.hasOwnProperty(channels[i]) &&
                     material.channels[channels[i]].texture
                 ) {
+                    // Update texture UID
                     material.channels[channels[i]].texture.uid = textureUid;
+                } else {
+                    // Create new texture
+                    material.channels[channels[i]].texture = {
+                        internalFormat: 'RGB',
+                        magFilter: 'LINEAR',
+                        minFilter: 'LINEAR_MIPMAP_LINEAR',
+                        texCoordUnit: 0,
+                        textureTarget: 'TEXTURE_2D',
+                        uid: textureUid,
+                        wrapS: 'REPEAT',
+                        wrapT: 'REPEAT'
+                    };
                 }
             }
             this.api.setMaterial(material, function(err, result) {
