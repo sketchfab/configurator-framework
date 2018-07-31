@@ -166,12 +166,19 @@ Instanciate an option "model" with the following parameters:
 ## Development
 
 * `npm install` to install dependencies
-* `npm run build` to build production library
 * `npm run watch` to build/watch for dev
 
-## Roadmap
+## Building for production / Release
 
-* [ ] Use materials for default values
+* `npm install` to install dependencies
+* Bump the version in `package.json`
+* `npm run build` to build for production
+* Commit the build generated in `dist/`
+* Tag the commit with the version
+
+## Todo
+
+* [ ] Use material values as default values
 * [ ] Support textures or full materials
 * [ ] Support scale/translation/rotation
 * [ ] Custom color picker
