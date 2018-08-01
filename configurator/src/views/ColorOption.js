@@ -11,7 +11,7 @@ ColorOption.prototype = {
     <div class="option__control">
         {{#options}}
             <label class="color" data-value="{{color}}">
-                <input type="radio" name="{{id}}" value="{{color}}" data-option="{{index}}" {{checked}}>
+                <input type="radio" name="{{id}}" value="{{color}}" data-option="{{index}}" {{#isSelected}}checked{{/isSelected}}>
                 <span class="color__swatch" style="background-color: {{color}}"></span>
                 <span class="color__name">{{name}}</span>
             </label>
@@ -31,11 +31,24 @@ ColorOption.prototype = {
             this.el = document.createElement('DIV');
             this.el.className = 'option option--color';
 
-            var html = Mustache.render(this.template, {
+            const currentValue = this.model.getOptionValue(this.index);
+            let optionsForTemplate;
+            if (this.model.options[this.index].options !== undefined) {
+                optionsForTemplate = this.model.options[this.index].options.map((opt, index) => {
+                    return Object.assign({}, opt, {
+                        index: index,
+                        isSelected: opt.color.toUpperCase() === currentValue.toUpperCase()
+                    });
+                });
+            } else {
+                optionsForTemplate = null;
+            }
+
+            const html = Mustache.render(this.template, {
                 id: this._generateId(),
                 index: this.index,
                 option: this.model.options[this.index],
-                options: this.model.options[this.index].options,
+                options: optionsForTemplate,
                 value: this.model.getOptionValue(this.index)
             });
             this.el.innerHTML = html;
