@@ -172,7 +172,7 @@ Instanciate an option "model" with the following parameters:
 
 * `npm install` to install dependencies
 * `npm version x.x.x` where `x.x.x` is the new semver version
-* push to github
+* commit and push to github
 
 ## Todo
 
