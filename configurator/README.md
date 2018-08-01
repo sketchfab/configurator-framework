@@ -171,10 +171,8 @@ Instanciate an option "model" with the following parameters:
 ## Building for production / Release
 
 * `npm install` to install dependencies
-* Bump the version in `package.json`
-* `npm run build` to build for production
-* Commit the build generated in `dist/`
-* Tag the commit with the version
+* `npm version x.x.x` where `x.x.x` is the new semver version
+* push to github
 
 ## Todo
 
