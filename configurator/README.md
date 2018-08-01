@@ -170,9 +170,9 @@ Instanciate an option "model" with the following parameters:
 
 ## Building for production / Release
 
-* `npm install` to install dependencies
-* `npm version x.x.x` where `x.x.x` is the new semver version
-* push to github
+* `npm install` to install dependencies.
+* `npm version x.x.x` where `x.x.x` is [a valid version](https://docs.npmjs.com/cli/version).
+* commit, tag and push to github.
 
 ## Todo
 
