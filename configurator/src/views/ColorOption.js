@@ -36,7 +36,6 @@ ColorOption.prototype = {
             if (this.model.options[this.index].options !== undefined) {
                 optionsForTemplate = this.model.options[this.index].options.map((opt, index) => {
                     return Object.assign({}, opt, {
-                        index: index,
                         isSelected: opt.color.toUpperCase() === currentValue.toUpperCase()
                     });
                 });
