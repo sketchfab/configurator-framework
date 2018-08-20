@@ -7,7 +7,8 @@
     "watch": "webpack --watch --mode=development",
     "build": "webpack --mode=production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "version": "npm run build && git add -A dist package-lock.json package.json"
+    "version": "npm run build && git add -A dist package-lock.json package.json",
+    "docs": "npx jsdoc src/*.js src/**/*.js -d docs"
   },
   "author": "Sketchfab",
   "license": "ISC",

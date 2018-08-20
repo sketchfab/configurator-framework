@@ -174,6 +174,10 @@ Instanciate an option "model" with the following parameters:
 * `npm version x.x.x` where `x.x.x` is [a valid version](https://docs.npmjs.com/cli/version).
 * commit, tag and push to github.
 
+## Generate docs
+
+* `npm run docs`
+
 ## Todo
 
 * [ ] Use material values as default values
