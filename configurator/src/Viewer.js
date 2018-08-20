@@ -211,9 +211,9 @@ class Viewer {
         material.channels.AlbedoPBR.color = linearColor;
         material.channels.DiffusePBR.color = linearColor;
         material.channels.DiffuseColor.color = linearColor;
-        material.channels.AlbedoPBR.texture = null;
-        material.channels.DiffusePBR.texture = null;
-        material.channels.DiffuseColor.texture = null;
+        material.channels.AlbedoPBR.texture = undefined;
+        material.channels.DiffusePBR.texture = undefined;
+        material.channels.DiffuseColor.texture = undefined;
 
         this.api.setMaterial(material, function(err, result) {
             if (err) {
