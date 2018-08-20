@@ -65,9 +65,6 @@ class Viewer {
         api.addEventListener(
             'viewerready',
             function() {
-                api.addEventListener('click', function(e) {
-                    console.info(e);
-                });
                 this._onViewerReady()
                     .then(
                         function() {
