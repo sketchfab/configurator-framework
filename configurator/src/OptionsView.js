@@ -3,6 +3,8 @@ import SelectOption from './views/SelectOption';
 import TextureOption from './views/TextureOption';
 import VisibleOption from './views/VisibleOption';
 
+const FORM_CLASS_NAME = 'sketchfab-configurator';
+
 export default function OptionsView(el, model) {
     this.el = el;
     this.model = model;
@@ -14,7 +16,10 @@ export default function OptionsView(el, model) {
 OptionsView.prototype = {
     initialize: function() {
         this.handleOptionChange = this.handleOptionChange.bind(this);
-        this.el.addEventListener('change', this.handleOptionChange, false);
+        this.formEl = document.createElement('form');
+        this.formEl.className = FORM_CLASS_NAME;
+        this.formEl.addEventListener('change', this.handleOptionChange, false);
+        this.el.appendChild(this.formEl);
 
         const classes = {
             color: ColorOption,
@@ -28,12 +33,12 @@ OptionsView.prototype = {
             subview = new classes[this.model.options[i].type](this.model, i);
             subview.render();
             this.subviews.push(subview);
-            this.el.appendChild(subview.el);
+            this.formEl.appendChild(subview.el);
         }
     },
 
     dispose: function() {
-        this.el.removeEventListener('change', this.handleOptionChange, false);
+        this.formEl.removeEventListener('change', this.handleOptionChange, false);
         this.el.innerHTML = '';
     },
 
