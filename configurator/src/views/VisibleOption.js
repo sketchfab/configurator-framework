@@ -1,23 +1,16 @@
 import Mustache from 'mustache';
 
-function VisibleOption(model, index) {
-    this.model = model;
-    this.index = index;
-}
+class VisibleOption {
+    constructor(model, index) {
+        this.model = model;
+        this.index = index;
+    }
 
-VisibleOption.prototype = {
-    template: `
-    <label for="{{id}}">{{option.name}}</label>
-    <div class="option__control">
-        <input type="checkbox" data-option="{{index}}" id="{{id}}" {{#value}}checked{{/value}}>
-    </div>
-    `,
-
-    _generateId: function() {
+    _generateId() {
         return 'control_' + Math.floor(Math.random() * 10000);
-    },
+    }
 
-    render: function() {
+    render() {
         if (!this.el) {
             this.el = document.createElement('DIV');
             this.el.className = 'option option--visible';
@@ -32,6 +25,13 @@ VisibleOption.prototype = {
         }
         return this;
     }
-};
+}
+
+VisibleOption.prototype.template = `
+<label for="{{id}}">{{option.name}}</label>
+<div class="option__control">
+    <input type="checkbox" data-option="{{index}}" id="{{id}}" {{#value}}checked{{/value}}>
+</div>
+`;
 
 export default VisibleOption;

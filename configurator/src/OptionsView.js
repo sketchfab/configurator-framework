@@ -5,16 +5,16 @@ import VisibleOption from './views/VisibleOption';
 
 const FORM_CLASS_NAME = 'sketchfab-configurator';
 
-export default function OptionsView(el, model) {
-    this.el = el;
-    this.model = model;
-    this.els = [];
-    this.subviews = [];
-    this.initialize();
-}
+class OptionsView {
+    constructor(el, model) {
+        this.el = el;
+        this.model = model;
+        this.els = [];
+        this.subviews = [];
+        this.initialize();
+    }
 
-OptionsView.prototype = {
-    initialize: function() {
+    initialize() {
         this.handleOptionChange = this.handleOptionChange.bind(this);
         this.formEl = document.createElement('form');
         this.formEl.className = FORM_CLASS_NAME;
@@ -35,22 +35,24 @@ OptionsView.prototype = {
             this.subviews.push(subview);
             this.formEl.appendChild(subview.el);
         }
-    },
+    }
 
-    dispose: function() {
+    dispose() {
         this.formEl.removeEventListener('change', this.handleOptionChange, false);
         this.el.innerHTML = '';
-    },
+    }
 
-    _generateId: function() {
+    _generateId() {
         return 'control_' + Math.floor(Math.random() * 10000);
-    },
+    }
 
-    handleOptionChange: function(e) {
+    handleOptionChange(e) {
         e.preventDefault();
         var target = e.target;
         var optionIndex = parseInt(target.getAttribute('data-option'), 10);
         var value = target.type === 'checkbox' ? !!target.checked : target.value;
         this.model.setOptionValue(optionIndex, value);
     }
-};
+}
+
+export default OptionsView;

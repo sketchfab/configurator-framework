@@ -1,12 +1,12 @@
-export default function Options(options, viewer) {
-    this.options = options;
-    this.viewer = viewer;
-    this.values = [];
-    this.initialize();
-}
+class Options {
+    constructor(options, viewer) {
+        this.options = options;
+        this.viewer = viewer;
+        this.values = [];
+        this.initialize();
+    }
 
-Options.prototype = {
-    initialize: function() {
+    initialize() {
         for (var i = 0, l = this.options.length; i < l; i++) {
             switch (this.options[i].type) {
                 case 'visible':
@@ -27,9 +27,9 @@ Options.prototype = {
                     break;
             }
         }
-    },
+    }
 
-    setOptionValue: function(optionIndex, value) {
+    setOptionValue(optionIndex, value) {
         var option = this.options[optionIndex];
         var fn = {
             color: 'applyOptionColor',
@@ -48,13 +48,13 @@ Options.prototype = {
 
         this.values[optionIndex] = value;
         this[fn[option.type]].apply(this, [optionIndex, value]);
-    },
+    }
 
-    getOptionValue: function(optionIndex) {
+    getOptionValue(optionIndex) {
         return this.values[optionIndex];
-    },
+    }
 
-    applyOptionColor: function(optionIndex, color) {
+    applyOptionColor(optionIndex, color) {
         var option = this.options[optionIndex];
 
         if (option.type !== 'color') {
@@ -63,9 +63,9 @@ Options.prototype = {
 
         var material = option.material;
         this.viewer.setColor(material, color);
-    },
+    }
 
-    applyOptionVisible: function(optionIndex, isVisible) {
+    applyOptionVisible(optionIndex, isVisible) {
         var option = this.options[optionIndex];
 
         if (option.type !== 'visible') {
@@ -78,9 +78,9 @@ Options.prototype = {
         } else {
             this.viewer.hide(selector);
         }
-    },
+    }
 
-    applyOptionSelect: function(optionIndex, selectedIndex) {
+    applyOptionSelect(optionIndex, selectedIndex) {
         var option = this.options[optionIndex];
 
         if (option.type !== 'select') {
@@ -98,9 +98,9 @@ Options.prototype = {
                 this.viewer.hide(option.options[i].selector);
             }
         }
-    },
+    }
 
-    applyOptionTexture: function(optionIndex, selectedIndex) {
+    applyOptionTexture(optionIndex, selectedIndex) {
         var option = this.options[optionIndex];
 
         if (option.type !== 'texture') {
@@ -109,12 +109,10 @@ Options.prototype = {
 
         for (var i = 0, l = option.options.length; i < l; i++) {
             if (i === selectedIndex) {
-                this.viewer.setTexture(
-                    option.material,
-                    option.channels,
-                    option.options[i].url
-                );
+                this.viewer.setTexture(option.material, option.channels, option.options[i].url);
             }
         }
     }
-};
+}
+
+export default Options;

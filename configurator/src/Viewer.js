@@ -1,20 +1,19 @@
 import { srgbToLinear, hexToRgb } from './lib/Colors';
 
-export default function Viewer(iframe, uid, callback, options) {
-    this.iframe = iframe;
-    this.uid = uid;
-    this.callback = callback;
-    this.options = options ? options : {};
+class Viewer {
+    constructor(iframe, uid, callback, options) {
+        this.iframe = iframe;
+        this.uid = uid;
+        this.callback = callback;
+        this.options = options ? options : {};
+        this.api = null;
+        this.doc = null;
+        this.materials = null;
+        this.textures = {};
+        this.start();
+    }
 
-    this.api = null;
-    this.doc = null;
-    this.materials = null;
-    this.textures = {};
-    this.start();
-}
-
-Viewer.prototype = {
-    start: function start() {
+    start() {
         var client = new Sketchfab(this.iframe);
 
         var defaultParams = {
@@ -26,9 +25,9 @@ Viewer.prototype = {
             error: this._onError.bind(this)
         });
         client.init(this.uid, params);
-    },
+    }
 
-    dispose: function() {
+    dispose() {
         this.materials = null;
         this.doc = null;
         this.api = null;
@@ -39,13 +38,13 @@ Viewer.prototype = {
             .replace('js-ready', '')
             .replace('js-started', '');
         this.iframe = null;
-    },
+    }
 
-    getApi: function() {
+    getApi() {
         return this.api;
-    },
+    }
 
-    _onSuccess: function _onSuccess(api) {
+    _onSuccess(api) {
         this.api = api;
         api.start(() => {
             this.iframe.className += ' js-started';
@@ -69,13 +68,13 @@ Viewer.prototype = {
                     });
             }.bind(this)
         );
-    },
+    }
 
-    _onError: function _onError() {
+    _onError() {
         console.error('Viewer error');
-    },
+    }
 
-    _onViewerReady: function _onViewerReady() {
+    _onViewerReady() {
         var promises = [this._getGraph(), this._getMaterials()];
         return Promise.all(promises)
             .then(
@@ -89,9 +88,9 @@ Viewer.prototype = {
             .catch(function(error) {
                 console.error(error);
             });
-    },
+    }
 
-    _getGraph: function _getGraph() {
+    _getGraph() {
         if (!this.api) {
             Promise.reject('getGraph: API not ready');
         }
@@ -110,9 +109,9 @@ Viewer.prototype = {
                 );
             }.bind(this)
         );
-    },
+    }
 
-    _getMaterials: function _getMaterials() {
+    _getMaterials() {
         if (!this.api) {
             Promise.reject('getMaterials: API not ready');
         }
@@ -127,9 +126,9 @@ Viewer.prototype = {
                 });
             }.bind(this)
         );
-    },
+    }
 
-    _getMaterialByName: function _getMaterialByName(materialName) {
+    _getMaterialByName(materialName) {
         if (!this.materials) {
             return null;
         }
@@ -140,9 +139,9 @@ Viewer.prototype = {
             }
             return acc;
         }, null);
-    },
+    }
 
-    _renderGraphNode: function _renderGraphNode(doc, node) {
+    _renderGraphNode(doc, node) {
         var newNode = doc.createElement(node.type);
         newNode.setAttribute('instance', node.instanceID);
         if (node.name) {
@@ -155,17 +154,17 @@ Viewer.prototype = {
             }
         }
         return newNode;
-    },
+    }
 
-    _getInstanceIDsFromSelector: function(selector) {
+    _getInstanceIDsFromSelector(selector) {
         var nodes = Array.from(this.doc.querySelectorAll(selector));
         var ids = nodes.map(function(node) {
             return node.getAttribute('instance');
         });
         return ids;
-    },
+    }
 
-    show: function show(selector) {
+    show(selector) {
         if (!this.api) {
             console.error('show: viewer not ready');
             return;
@@ -176,9 +175,9 @@ Viewer.prototype = {
                 this.api.show(instanceId);
             }.bind(this)
         );
-    },
+    }
 
-    hide: function hide(selector) {
+    hide(selector) {
         if (!this.api) {
             console.error('hide: viewer not ready');
             return;
@@ -189,9 +188,9 @@ Viewer.prototype = {
                 this.api.hide(instanceId);
             }.bind(this)
         );
-    },
+    }
 
-    setColor: function(material, hexColor) {
+    setColor(material, hexColor) {
         if (!this.api) {
             console.error('setColor: viewer not ready');
             return;
@@ -204,9 +203,9 @@ Viewer.prototype = {
         material.forEach(mat => {
             this._setMaterialColor(mat, hexColor);
         });
-    },
+    }
 
-    _setMaterialColor: function(materialName, hexColor) {
+    _setMaterialColor(materialName, hexColor) {
         var material = this._getMaterialByName(materialName);
         var linearColor = srgbToLinear(hexToRgb(hexColor));
         material.channels.AlbedoPBR.color = linearColor;
@@ -221,9 +220,9 @@ Viewer.prototype = {
                 console.error(err);
             }
         });
-    },
+    }
 
-    setTexture: function setTexture(material, channels, url) {
+    setTexture(material, channels, url) {
         if (!Array.isArray(material)) {
             material = [material];
         }
@@ -231,9 +230,9 @@ Viewer.prototype = {
         material.forEach(mat => {
             this._setMaterialTexture(mat, channels, url);
         });
-    },
+    }
 
-    _setMaterialTexture: function _setMaterialTexture(materialName, channels, url) {
+    _setMaterialTexture(materialName, channels, url) {
         var material = this._getMaterialByName(materialName);
         var texturePromise = this._addTexture(url);
         texturePromise.then(textureUid => {
@@ -268,9 +267,9 @@ Viewer.prototype = {
                 }
             });
         });
-    },
+    }
 
-    _addTexture: function(url) {
+    _addTexture(url) {
         return new Promise((resolve, reject) => {
             if (this.textures.hasOwnProperty(url)) {
                 resolve(this.textures[url]);
@@ -286,4 +285,6 @@ Viewer.prototype = {
             }
         });
     }
-};
+}
+
+export default Viewer;
