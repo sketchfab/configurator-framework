@@ -1,6 +1,9 @@
 import Mustache from 'mustache';
 
-class ColorOption {
+/**
+ * View for 'select' option
+ */
+class SelectOption {
     constructor(model, index) {
         this.model = model;
         this.index = index;
@@ -10,6 +13,9 @@ class ColorOption {
         return 'control_' + Math.floor(Math.random() * 10000);
     }
 
+    /**
+     * Renders the view
+     */
     render() {
         if (!this.el) {
             this.el = document.createElement('DIV');
@@ -36,7 +42,7 @@ class ColorOption {
     }
 }
 
-ColorOption.prototype.template = `
+SelectOption.prototype.template = `
 <label for="{{id}}">{{option.name}}</label>
 <div class="option__control">
     <select id="{{id}}" data-option="{{index}}" value="{{value}}">
@@ -47,4 +53,4 @@ ColorOption.prototype.template = `
 </div>
 `;
 
-export default ColorOption;
+export default SelectOption;

@@ -1,5 +1,8 @@
 import Mustache from 'mustache';
 
+/**
+ * View for 'color' option
+ */
 class ColorOption {
     constructor(model, index) {
         this.model = model;
@@ -10,6 +13,9 @@ class ColorOption {
         return 'control_' + Math.floor(Math.random() * 10000);
     }
 
+    /**
+     * Renders the view
+     */
     render() {
         if (!this.el) {
             this.el = document.createElement('DIV');

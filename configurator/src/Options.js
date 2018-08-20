@@ -1,3 +1,6 @@
+/**
+ * Model for options
+ */
 class Options {
     constructor(options, viewer) {
         this.options = options;
@@ -29,9 +32,14 @@ class Options {
         }
     }
 
+    /**
+     * Set an option value
+     * @param {number} optionIndex Index of option
+     * @param {*} value Value
+     */
     setOptionValue(optionIndex, value) {
-        var option = this.options[optionIndex];
-        var fn = {
+        const option = this.options[optionIndex];
+        const fn = {
             color: 'applyOptionColor',
             visible: 'applyOptionVisible',
             select: 'applyOptionSelect',
@@ -50,29 +58,33 @@ class Options {
         this[fn[option.type]].apply(this, [optionIndex, value]);
     }
 
+    /**
+     * Gets the value of an option
+     * @param {number} optionIndex Index of option
+     */
     getOptionValue(optionIndex) {
         return this.values[optionIndex];
     }
 
     applyOptionColor(optionIndex, color) {
-        var option = this.options[optionIndex];
+        const option = this.options[optionIndex];
 
         if (option.type !== 'color') {
             throw new Error('Option is not of "color" type');
         }
 
-        var material = option.material;
+        const material = option.material;
         this.viewer.setColor(material, color);
     }
 
     applyOptionVisible(optionIndex, isVisible) {
-        var option = this.options[optionIndex];
+        const option = this.options[optionIndex];
 
         if (option.type !== 'visible') {
             throw new Error('Option is not of "visible" type');
         }
 
-        var selector = option.selector;
+        const selector = option.selector;
         if (isVisible) {
             this.viewer.show(selector);
         } else {
@@ -81,7 +93,7 @@ class Options {
     }
 
     applyOptionSelect(optionIndex, selectedIndex) {
-        var option = this.options[optionIndex];
+        const option = this.options[optionIndex];
 
         if (option.type !== 'select') {
             throw new Error('Option is not of "select" type');
@@ -101,7 +113,7 @@ class Options {
     }
 
     applyOptionTexture(optionIndex, selectedIndex) {
-        var option = this.options[optionIndex];
+        const option = this.options[optionIndex];
 
         if (option.type !== 'texture') {
             throw new Error('Option is not of "texture" type');

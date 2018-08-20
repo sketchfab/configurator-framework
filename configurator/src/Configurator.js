@@ -10,6 +10,9 @@ const schema = require('./schema.json');
 
 const ALLOW_EMBED = true;
 
+/**
+ * Main Configurator class
+ */
 class Configurator {
     constructor(iframeEl, optionsEl, config = null) {
         this.iframeEl = iframeEl;
@@ -19,11 +22,11 @@ class Configurator {
         this.config = config;
 
         if (!ALLOW_EMBED && isIFrame()) {
-            this.renderFatalError('This page is for preview only and cannot be embedded.');
+            this._renderFatalError('This page is for preview only and cannot be embedded.');
             return;
         }
 
-        var promiseConfig;
+        let promiseConfig;
 
         if (this.config) {
             promiseConfig = Promise.resolve(this.config);
@@ -31,10 +34,10 @@ class Configurator {
             var parameters = parseQueryString(window.location.search);
             if (parameters.hasOwnProperty('config')) {
                 console.log('Loading config from URL', parameters.config);
-                promiseConfig = this.loadConfig(parameters.config);
+                promiseConfig = this._loadConfig(parameters.config);
             } else if (window.defaultConfigUrl) {
                 console.log('Loading default config URL', window.defaultConfigUrl);
-                promiseConfig = this.loadConfig(window.defaultConfigUrl);
+                promiseConfig = this._loadConfig(window.defaultConfigUrl);
             } else if (window.defaultConfig) {
                 console.log('Loading config', window.defaultConfig);
                 promiseConfig = Promise.resolve(window.defaultConfig);
@@ -50,14 +53,14 @@ class Configurator {
                     console.warn(validation.errors);
                 }
                 this.config = config;
-                this.initialize();
+                this._initialize();
             })
             .catch(error => {
                 console.error(error);
             });
     }
 
-    initialize() {
+    _initialize() {
         const config = this.config;
         this.viewer = new Viewer(
             iframeEl,
@@ -74,7 +77,7 @@ class Configurator {
         );
     }
 
-    renderFatalError(message) {
+    _renderFatalError(message) {
         const styles = `
             position: absolute;
             top: 0;
@@ -104,12 +107,15 @@ class Configurator {
         }
     }
 
+    /**
+     * Disposes the configurator
+     */
     dispose() {
         this.optionView.dispose();
         this.viewer.dispose();
     }
 
-    loadConfig(url) {
+    _loadConfig(url) {
         return fetch(url, {
             method: 'GET',
             mode: 'cors'

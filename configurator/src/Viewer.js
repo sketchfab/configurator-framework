@@ -1,5 +1,8 @@
 import { srgbToLinear, hexToRgb } from './lib/Colors';
 
+/**
+ * View for the Viewer
+ */
 class Viewer {
     constructor(iframe, uid, callback, options) {
         this.iframe = iframe;
@@ -13,20 +16,26 @@ class Viewer {
         this.start();
     }
 
+    /**
+     * Starts the viewer
+     */
     start() {
-        var client = new Sketchfab(this.iframe);
+        const client = new Sketchfab(this.iframe);
 
-        var defaultParams = {
+        const defaultParams = {
             graph_optimizer: 0
         };
-        var userParams = this.options.hasOwnProperty('params') ? this.options.params : {};
-        var params = Object.assign({}, defaultParams, userParams, {
+        const userParams = this.options.hasOwnProperty('params') ? this.options.params : {};
+        const params = Object.assign({}, defaultParams, userParams, {
             success: this._onSuccess.bind(this),
             error: this._onError.bind(this)
         });
         client.init(this.uid, params);
     }
 
+    /**
+     * Disposes the viewer
+     */
     dispose() {
         this.materials = null;
         this.doc = null;
@@ -40,6 +49,10 @@ class Viewer {
         this.iframe = null;
     }
 
+    /**
+     * Returns the api
+     * @return {Object} api
+     */
     getApi() {
         return this.api;
     }
@@ -75,7 +88,7 @@ class Viewer {
     }
 
     _onViewerReady() {
-        var promises = [this._getGraph(), this._getMaterials()];
+        const promises = [this._getGraph(), this._getMaterials()];
         return Promise.all(promises)
             .then(
                 function(results) {
@@ -102,7 +115,7 @@ class Viewer {
                         if (err) {
                             return reject(err);
                         }
-                        var doc = document.implementation.createDocument('', '', null);
+                        const doc = document.implementation.createDocument('', '', null);
                         doc.appendChild(this._renderGraphNode(doc, result));
                         resolve(doc);
                     }.bind(this)
@@ -157,19 +170,23 @@ class Viewer {
     }
 
     _getInstanceIDsFromSelector(selector) {
-        var nodes = Array.from(this.doc.querySelectorAll(selector));
-        var ids = nodes.map(function(node) {
+        const nodes = Array.from(this.doc.querySelectorAll(selector));
+        const ids = nodes.map(function(node) {
             return node.getAttribute('instance');
         });
         return ids;
     }
 
+    /**
+     * Shows objects targeted by selector
+     * @param {String} selector CSS Selector for object to show
+     */
     show(selector) {
         if (!this.api) {
             console.error('show: viewer not ready');
             return;
         }
-        var ids = this._getInstanceIDsFromSelector(selector);
+        const ids = this._getInstanceIDsFromSelector(selector);
         ids.forEach(
             function(instanceId) {
                 this.api.show(instanceId);
@@ -177,12 +194,16 @@ class Viewer {
         );
     }
 
+    /**
+     * Hides objects targeted by selector
+     * @param {string} selector CSS Selector for object to hide
+     */
     hide(selector) {
         if (!this.api) {
             console.error('hide: viewer not ready');
             return;
         }
-        var ids = this._getInstanceIDsFromSelector(selector);
+        const ids = this._getInstanceIDsFromSelector(selector);
         ids.forEach(
             function(instanceId) {
                 this.api.hide(instanceId);
@@ -190,6 +211,11 @@ class Viewer {
         );
     }
 
+    /**
+     * Sets color (Diffuse, DiffusePBR, AlbedoPBr) for given material name
+     * @param {string|string[]} material Name of material. Also accepts array of names for changing multiple materials at once.
+     * @param {string} hexColor Hex color
+     */
     setColor(material, hexColor) {
         if (!this.api) {
             console.error('setColor: viewer not ready');
@@ -206,8 +232,8 @@ class Viewer {
     }
 
     _setMaterialColor(materialName, hexColor) {
-        var material = this._getMaterialByName(materialName);
-        var linearColor = srgbToLinear(hexToRgb(hexColor));
+        let material = this._getMaterialByName(materialName);
+        const linearColor = srgbToLinear(hexToRgb(hexColor));
         material.channels.AlbedoPBR.color = linearColor;
         material.channels.DiffusePBR.color = linearColor;
         material.channels.DiffuseColor.color = linearColor;
@@ -222,6 +248,12 @@ class Viewer {
         });
     }
 
+    /**
+     * Sets texture on material/channels
+     * @param {string|string[]} material Name of material. Also accepts array of material names.
+     * @param {string|string[]} channels Name of channel. Also accepts array of channel names.
+     * @param {string} url URL of the texture.
+     */
     setTexture(material, channels, url) {
         if (!Array.isArray(material)) {
             material = [material];
@@ -233,8 +265,8 @@ class Viewer {
     }
 
     _setMaterialTexture(materialName, channels, url) {
-        var material = this._getMaterialByName(materialName);
-        var texturePromise = this._addTexture(url);
+        let material = this._getMaterialByName(materialName);
+        const texturePromise = this._addTexture(url);
         texturePromise.then(textureUid => {
             // Accept array of channel names, or a single channel name
             if (!Array.isArray(channels)) {
