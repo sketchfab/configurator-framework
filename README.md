@@ -170,9 +170,14 @@ Instanciate an option "model" with the following parameters:
 
 ## Building for production / Release
 
+* `git checkout master`
 * `npm install` to install dependencies.
 * `npm version x.x.x` where `x.x.x` is [a valid version](https://docs.npmjs.com/cli/version).
-* commit, tag and push to github.
+    * this will update the version in `package.json`
+    * build the library for production (`npm run build`)
+    * create a new commit
+    * tag the commit with the new version
+* Push the tag to github
 
 ## Generate docs
 
