@@ -1,12 +1,15 @@
-export default function Options(options, viewer) {
-    this.options = options;
-    this.viewer = viewer;
-    this.values = [];
-    this.initialize();
-}
+/**
+ * Model for options
+ */
+class Options {
+    constructor(options, viewer) {
+        this.options = options;
+        this.viewer = viewer;
+        this.values = [];
+        this.initialize();
+    }
 
-Options.prototype = {
-    initialize: function() {
+    initialize() {
         for (var i = 0, l = this.options.length; i < l; i++) {
             switch (this.options[i].type) {
                 case 'visible':
@@ -27,11 +30,16 @@ Options.prototype = {
                     break;
             }
         }
-    },
+    }
 
-    setOptionValue: function(optionIndex, value) {
-        var option = this.options[optionIndex];
-        var fn = {
+    /**
+     * Set an option value
+     * @param {number} optionIndex Index of option
+     * @param {*} value Value
+     */
+    setOptionValue(optionIndex, value) {
+        const option = this.options[optionIndex];
+        const fn = {
             color: 'applyOptionColor',
             visible: 'applyOptionVisible',
             select: 'applyOptionSelect',
@@ -48,40 +56,44 @@ Options.prototype = {
 
         this.values[optionIndex] = value;
         this[fn[option.type]].apply(this, [optionIndex, value]);
-    },
+    }
 
-    getOptionValue: function(optionIndex) {
+    /**
+     * Gets the value of an option
+     * @param {number} optionIndex Index of option
+     */
+    getOptionValue(optionIndex) {
         return this.values[optionIndex];
-    },
+    }
 
-    applyOptionColor: function(optionIndex, color) {
-        var option = this.options[optionIndex];
+    applyOptionColor(optionIndex, color) {
+        const option = this.options[optionIndex];
 
         if (option.type !== 'color') {
             throw new Error('Option is not of "color" type');
         }
 
-        var material = option.material;
+        const material = option.material;
         this.viewer.setColor(material, color);
-    },
+    }
 
-    applyOptionVisible: function(optionIndex, isVisible) {
-        var option = this.options[optionIndex];
+    applyOptionVisible(optionIndex, isVisible) {
+        const option = this.options[optionIndex];
 
         if (option.type !== 'visible') {
             throw new Error('Option is not of "visible" type');
         }
 
-        var selector = option.selector;
+        const selector = option.selector;
         if (isVisible) {
             this.viewer.show(selector);
         } else {
             this.viewer.hide(selector);
         }
-    },
+    }
 
-    applyOptionSelect: function(optionIndex, selectedIndex) {
-        var option = this.options[optionIndex];
+    applyOptionSelect(optionIndex, selectedIndex) {
+        const option = this.options[optionIndex];
 
         if (option.type !== 'select') {
             throw new Error('Option is not of "select" type');
@@ -98,10 +110,10 @@ Options.prototype = {
                 this.viewer.hide(option.options[i].selector);
             }
         }
-    },
+    }
 
-    applyOptionTexture: function(optionIndex, selectedIndex) {
-        var option = this.options[optionIndex];
+    applyOptionTexture(optionIndex, selectedIndex) {
+        const option = this.options[optionIndex];
 
         if (option.type !== 'texture') {
             throw new Error('Option is not of "texture" type');
@@ -109,12 +121,10 @@ Options.prototype = {
 
         for (var i = 0, l = option.options.length; i < l; i++) {
             if (i === selectedIndex) {
-                this.viewer.setTexture(
-                    option.material,
-                    option.channels,
-                    option.options[i].url
-                );
+                this.viewer.setTexture(option.material, option.channels, option.options[i].url);
             }
         }
     }
-};
+}
+
+export default Options;

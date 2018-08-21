@@ -3,7 +3,7 @@
     "params": {
         "camera": 0,
         "preload": 1,
-        "scrollwheel": 0
+        "animation_autoplay": 0
     },
     "config": [
         {

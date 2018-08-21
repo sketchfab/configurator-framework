@@ -1,32 +1,22 @@
 import Mustache from 'mustache';
 
-function ColorOption(model, index) {
-    this.model = model;
-    this.index = index;
-}
+/**
+ * View for 'color' option
+ */
+class ColorOption {
+    constructor(model, index) {
+        this.model = model;
+        this.index = index;
+    }
 
-ColorOption.prototype = {
-    template: `
-    <label for="{{id}}">{{option.name}}</label>
-    <div class="option__control">
-        {{#options}}
-            <label class="color" data-value="{{color}}">
-                <input type="radio" name="{{id}}" value="{{color}}" data-option="{{index}}" {{#isSelected}}checked{{/isSelected}}>
-                <span class="color__swatch" style="background-color: {{color}}"></span>
-                <span class="color__name">{{name}}</span>
-            </label>
-        {{/options}}
-        {{^options}}
-            <input type="color" data-option="{{index}}" id="{{id}}" value="{{value}}">
-        {{/options}}
-    </div>
-    `,
-
-    _generateId: function() {
+    _generateId() {
         return 'control_' + Math.floor(Math.random() * 10000);
-    },
+    }
 
-    render: function() {
+    /**
+     * Renders the view
+     */
+    render() {
         if (!this.el) {
             this.el = document.createElement('DIV');
             this.el.className = 'option option--color';
@@ -54,6 +44,22 @@ ColorOption.prototype = {
         }
         return this;
     }
-};
+}
+
+ColorOption.prototype.template = `
+<label for="{{id}}">{{option.name}}</label>
+<div class="option__control">
+    {{#options}}
+        <label class="color" data-value="{{color}}">
+            <input type="radio" name="{{id}}" value="{{color}}" data-option="{{index}}" {{#isSelected}}checked{{/isSelected}}>
+            <span class="color__swatch" style="background-color: {{color}}"></span>
+            <span class="color__name">{{name}}</span>
+        </label>
+    {{/options}}
+    {{^options}}
+        <input type="color" data-option="{{index}}" id="{{id}}" value="{{value}}">
+    {{/options}}
+</div>
+`;
 
 export default ColorOption;
