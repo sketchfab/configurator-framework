@@ -1,6 +1,7 @@
-# Configurator
+# Configurator Framework
 
-This demo shows how to make configurator simply by describing the available options.
+The Configurator Framework is a javascript library for building 3D configurators with Sketchfab Viewer API.
+Configurators are described by a JSON file that are consummed by the framework.
 
 ## Supported option types
 
