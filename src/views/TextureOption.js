@@ -26,10 +26,11 @@ class TextureOption {
             this.el.className = 'option option--texture';
 
             var currentValue = this.model.getOptionValue(this.index);
-            var optionsWithIndex = this.model.options[this.index].options.map((opt, index) => {
+            var renderOptions = this.model.options[this.index].options.map((opt, index) => {
                 return Object.assign({}, opt, {
                     currentIndex: index,
-                    isSelected: index === currentValue
+                    isSelected: index === currentValue,
+                    previewUrl: opt.previewUrl !== undefined ? opt.previewUrl : opt.url + '?preview'
                 });
             });
 
@@ -37,7 +38,7 @@ class TextureOption {
                 id: this._generateId(),
                 index: this.index,
                 option: this.model.options[this.index],
-                options: optionsWithIndex,
+                options: renderOptions,
                 value: currentValue
             });
             this.el.innerHTML = html;
@@ -53,7 +54,7 @@ TextureOption.prototype.template = `
         <label class="texture" data-url="{{url}}">
             <input type="radio" name="{{id}}" value="{{currentIndex}}" data-option="{{index}}" {{#isSelected}}checked{{/isSelected}}>
             <span class="texture__preview">
-                <img src="{{url}}?preview" width="100" height="100" alt="{{name}}">
+                <img src="{{previewUrl}}" width="100" height="100" alt="{{name}}">
             </span>
             <span class="texture__name">{{name}}</span>
         </label>
