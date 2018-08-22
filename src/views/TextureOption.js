@@ -4,6 +4,10 @@ import Mustache from 'mustache';
  * View for 'texture' option
  */
 class TextureOption {
+    /**
+     * @param {object} model Options instance
+     * @param {number} index Index of option
+     */
     constructor(model, index) {
         this.model = model;
         this.index = index;

@@ -4,6 +4,13 @@ import { srgbToLinear, hexToRgb } from './lib/Colors';
  * View for the Viewer
  */
 class Viewer {
+    /**
+     * @param {object} iframe iframe DOM element for the viewer
+     * @param {string} uid Model UID
+     * @param {function} callback Callback for when the viewer is ready
+     * @param {object} options Options
+     * @param {object} options.params Embed params for the viewer
+     */
     constructor(iframe, uid, callback, options) {
         this.iframe = iframe;
         this.uid = uid;

@@ -113,56 +113,10 @@ Images must be CORS-enabled.
 }
 ```
 
-## API
+## API Documentation
 
-### SketchfabConfigurator.Configurator(iframeEl, optionsEl)
-
-Instanciate a new configurator with 2 DOM elements: an iframe for the viewer and an element that will contain the options.
-
-```javascript
-var iframeEl = document.getElementById('api-frame');
-var optionsEl = document.querySelector('.options');
-var configurator = new SketchfabConfigurator.Configurator(iframeEl, optionsEl, [config]);
-```
-
-If `config` object is missing, the configurator will try to load the config from:
-
-* `?config=[url]`
-* `window.defaultConfigUrl`
-* `window.defaultConfig`
-
-### SketchfabConfigurator.Configurator.prototype.dispose()
-
-Dispose the configurator:
-
-* empty the iframe
-* empty the options element
-* removes event listeners
-
-### SketchfabConfigurator.Viewer(iframeEl, modelUid, onReadyCallback, config)
-
-Instanciate a new Sketchfab viewer with the following parameters:
-
-* `iframeEl`: iframe DOM elements
-* `modelUid`: model uid
-* `onReadyCallback`: function that will be called when viewer is ready
-* `config`: config
-
-### SketchfabConfigurator.Viewer.prototype.dispose()
-
-### SketchfabConfigurator.OptionsView(optionsEl, optionsObject)
-
-Instanciate an options view with the following parameters:
-
-* `optionsEl`: DOM element where options will be rendered
-* `optionsObject`: object of type `SketchfabConfiguration.Options`
-
-### SketchfabConfigurator.Options(config, viewer)
-
-Instanciate an option "model" with the following parameters:
-
-* `config`: config object
-* `viewer`: `SketchfabConfigurator.Viewer` instance
+* `npm run docs` to generate the docs
+* Doc will be generated in `docs/`
 
 ## Development
 
@@ -179,10 +133,6 @@ Instanciate an option "model" with the following parameters:
     * create a new commit
     * tag the commit with the new version
 * Push the tag to github
-
-## Generate docs
-
-* `npm run docs`
 
 ## Todo
 

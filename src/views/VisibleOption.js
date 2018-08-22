@@ -4,6 +4,10 @@ import Mustache from 'mustache';
  * View for 'visible' option
  */
 class VisibleOption {
+    /**
+     * @param {object} model Options instance
+     * @param {number} index Index of option
+     */
     constructor(model, index) {
         this.model = model;
         this.index = index;

@@ -2,6 +2,11 @@
  * Model for options
  */
 class Options {
+    /**
+     *
+     * @param {object[]} options List of options
+     * @param {object} viewer Viewer instance
+     */
     constructor(options, viewer) {
         this.options = options;
         this.viewer = viewer;

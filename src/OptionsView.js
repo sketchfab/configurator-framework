@@ -11,6 +11,11 @@ const FORM_CLASS_NAME = 'sketchfab-configurator';
  * The OptionsView will create subviews for each option and listen for all `change` events.
  */
 class OptionsView {
+    /**
+     *
+     * @param {object} el Placeholder DOM element for the UI
+     * @param {object} model Options instance
+     */
     constructor(el, model) {
         this.el = el;
         this.model = model;

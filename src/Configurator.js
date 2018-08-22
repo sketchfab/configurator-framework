@@ -14,6 +14,11 @@ const ALLOW_EMBED = true;
  * Main Configurator class
  */
 class Configurator {
+    /**
+     * @param {object} iframeEl iframe DOM element for the viewer
+     * @param {object} optionsEl Placeholder DOM element for the UI
+     * @param {object} config Configuration object
+     */
     constructor(iframeEl, optionsEl, config = null) {
         this.iframeEl = iframeEl;
         this.optionsEl = optionsEl;
