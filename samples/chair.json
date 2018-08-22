@@ -12,27 +12,30 @@
         "double_click": 0,
         "autospin": -0.1
     },
-    "config": [{
-        "name": "Select color",
-        "type": "color",
-        "material": ["seat"],
-        "options": [{
-                "color": "#6FC0E7",
-                "name": "Light Blue"
-            },
-            {
-                "color": "#2B4462",
-                "name": "Dark Blue"
-            },
-            {
-                "color": "#80B744",
-                "name": "Green"
-            },
-            {
-                "color": "#cc1f16",
-                "name": "Red"
-            }
-        ],
-        "default": "#2B4462"
-    }]
+    "config": [
+        {
+            "name": "Select color",
+            "type": "color",
+            "material": ["seat"],
+            "options": [
+                {
+                    "color": "#6FC0E7",
+                    "name": "Light Blue"
+                },
+                {
+                    "color": "#2B4462",
+                    "name": "Dark Blue"
+                },
+                {
+                    "color": "#80B744",
+                    "name": "Green"
+                },
+                {
+                    "color": "#cc1f16",
+                    "name": "Red"
+                }
+            ],
+            "default": "#2B4462"
+        }
+    ]
 }

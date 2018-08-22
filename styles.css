@@ -92,7 +92,7 @@ iframe {
     display: block;
 }
 
-.texture__preview  img {
+.texture__preview img {
     display: block;
     max-width: 100%;
     height: auto;

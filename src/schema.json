@@ -31,7 +31,6 @@
     },
     "required": ["model", "config"],
     "definitions": {
-
         "namedColor": {
             "$id": "#namedColor",
             "type": "object",
@@ -160,9 +159,7 @@
                     "description": "List of predefined model parts",
                     "type": "array",
                     "items": {
-                        "anyOf": [
-                            { "$ref": "#/definitions/modelPart" }
-                        ]
+                        "anyOf": [{ "$ref": "#/definitions/modelPart" }]
                     }
                 },
                 "default": {
@@ -198,9 +195,7 @@
                     "description": "List of predefined textures",
                     "type": "array",
                     "items": {
-                        "anyOf": [
-                            { "$ref": "#/definitions/predefinedTexture" }
-                        ]
+                        "anyOf": [{ "$ref": "#/definitions/predefinedTexture" }]
                     }
                 },
                 "default": {
