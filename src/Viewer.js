@@ -20,13 +20,13 @@ class Viewer {
         this.doc = null;
         this.materials = null;
         this.textures = {};
-        this.start();
+        this.init();
     }
 
     /**
-     * Starts the viewer
+     * Inits the viewer
      */
-    start() {
+    init() {
         const client = new Sketchfab(this.iframe);
 
         const defaultParams = {
@@ -38,6 +38,15 @@ class Viewer {
             error: this._onError.bind(this)
         });
         client.init(this.uid, params);
+    }
+
+    /**
+     * Starts the viewer
+     */
+    start() {
+        this.api.start(() => {
+            this.iframe.className += ' js-started';
+        });
     }
 
     /**
@@ -66,9 +75,11 @@ class Viewer {
 
     _onSuccess(api) {
         this.api = api;
-        api.start(() => {
-            this.iframe.className += ' js-started';
-        });
+
+        const { params: { autostart = true } = {} } = this.options;
+
+        if (autostart) this.start();
+
         api.addEventListener(
             'viewerready',
             function() {
