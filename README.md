@@ -7,7 +7,7 @@ Configurators are described by a JSON file that are consummed by the framework.
 
 ### Color
 
-The `visible` option allows the user to change the color of a material.
+The `color` option allows the user to change the color of a material.
 The selected color is applied to Diffuse, Diffuse (PBR) and Albedo (PBR) channels.
 
 ```json
