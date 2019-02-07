@@ -58,6 +58,10 @@
                 "url": {
                     "description": "Image URL",
                     "type": "string"
+                },
+                "previewUrl": {
+                    "description": "Image preview URL",
+                    "type": "string"
                 }
             },
             "required": ["name", "url"]
